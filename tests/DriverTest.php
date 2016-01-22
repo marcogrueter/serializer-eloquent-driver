@@ -28,6 +28,12 @@ class DriverTest extends \PHPUnit_Framework_TestCase
         $user->timestamps = false;
         $user->save();
 
+        $user->groups()->saveMany([
+            new Group(['name' => 'customers']),
+            new Group(['name' => 'platin-customers']),
+            new Group(['name' => 'users']),
+        ]);
+
         $order = new Orders();
         $order->user_id = $user->id;
         $order->name = 'Some item';
@@ -39,6 +45,8 @@ class DriverTest extends \PHPUnit_Framework_TestCase
     {
         Capsule::table('users')->delete();
         Capsule::table('orders')->delete();
+        Capsule::table('groups')->delete();
+        Capsule::table('user_group')->delete();
     }
 
     public function testSerializePaginator()
@@ -46,7 +54,7 @@ class DriverTest extends \PHPUnit_Framework_TestCase
         $driver = new EloquentDriver();
 
         $output = $driver->serialize(Capsule::table('users')->paginate());
-
+dd($output);
         $expected = array(
             '@map' => 'array',
             '@value' => array(

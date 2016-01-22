@@ -35,3 +35,18 @@ Capsule::schema('default')->create('orders', function (Blueprint $table) {
     $table->string('name', 255);
     $table->dateTime('ordered_at');
 });
+
+Capsule::schema('default')->dropIfExists('groups');
+Capsule::schema('default')->create('groups', function (Blueprint $table) {
+    $table->primary('id');
+    $table->integer('id');
+    $table->string('name', 255);
+});
+
+Capsule::schema('default')->dropIfExists('user_group');
+Capsule::schema('default')->create('user_group', function (Blueprint $table) {
+    $table->primary('id');
+    $table->integer('id');
+    $table->integer('user_id', 255);
+    $table->integer('group_id', 255);
+});

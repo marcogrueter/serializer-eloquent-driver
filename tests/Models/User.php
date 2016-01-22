@@ -34,4 +34,9 @@ class User extends Model
     {
         return $this->hasMany(Orders::class, 'user_id')->limit(10);
     }
+
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class);
+    }
 }
